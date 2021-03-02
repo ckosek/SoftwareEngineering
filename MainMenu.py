@@ -4,7 +4,7 @@ import sys
 import pygame as pg
 import pygame_menu as pm
 from pygame_menu import sound
-
+from SettingsHelper import Settings_Helper as sh
 #---------------------
 #Constants and Globals
 #---------------------
@@ -108,39 +108,6 @@ def set_background(name, value):
 		back_color = BLACK #BLACK BACKUP
 		back_color_default = 0
 		options_menu()
-
-#Method: Creates the theme used for all menus
-def set_theme():
-	pg.init()
-	screen_res = pg.display.Info()
-	w = screen_res.current_w
-	new_w_offset = w/4
-
-	eight_bit_font = pm.font.FONT_8BIT
-	title_theme = pm.widgets.MENUBAR_STYLE_NONE
-	font_size = 37
-	select_box_color = WHITE
-	if back_color == WHITE:
-		select_box_color = BLACK
-		
-	current_theme = pm.themes.Theme(background_color=back_color, widget_font=eight_bit_font, title_bar_style=title_theme, 
-							menubar_close_button=True, title_font=eight_bit_font, title_font_color=color, 
-							title_font_size=font_size, title_offset=(new_w_offset,0), selection_color=select_box_color)
-	return current_theme
-
-#Method: Creates the sound engine used with menus and gameplay
-def create_sound_engine():
-	engine = sound.Sound()
-	engine.set_sound(sound.SOUND_TYPE_CLICK_MOUSE, sound.SOUND_EXAMPLE_CLICK_MOUSE)
-	engine.set_sound(sound.SOUND_TYPE_CLOSE_MENU, sound.SOUND_EXAMPLE_CLOSE_MENU)
-	engine.set_sound(sound.SOUND_TYPE_ERROR, sound.SOUND_EXAMPLE_ERROR)
-	engine.set_sound(sound.SOUND_TYPE_EVENT, sound.SOUND_EXAMPLE_EVENT)
-	engine.set_sound(sound.SOUND_TYPE_EVENT_ERROR, sound.SOUND_EXAMPLE_EVENT_ERROR)
-	engine.set_sound(sound.SOUND_TYPE_KEY_ADDITION, sound.SOUND_EXAMPLE_KEY_ADD)
-	engine.set_sound(sound.SOUND_TYPE_KEY_DELETION, sound.SOUND_EXAMPLE_KEY_DELETE)
-	engine.set_sound(sound.SOUND_TYPE_OPEN_MENU, sound.SOUND_EXAMPLE_OPEN_MENU)
-	engine.set_sound(sound.SOUND_TYPE_WIDGET_SELECTION, sound.SOUND_EXAMPLE_WIDGET_SELECTION)
-	return engine
 
 
 #Method: Begins background music play, stops upon exiting the game
@@ -329,8 +296,8 @@ def main_menu():
 	h = screen_res.current_h
 	w = screen_res.current_w
 
-	mytheme = set_theme()
-	sound_engine = create_sound_engine()
+	mytheme = sh.set_theme(back_color, color)
+	sound_engine = sh.create_sound_engine()
 
 	menu = pm.Menu(h, w, 'The Ship Predicament', theme=mytheme)
 
@@ -355,8 +322,8 @@ def options_menu():
 	h = screen_res.current_h
 	w = screen_res.current_w
 
-	mytheme = set_theme()
-	sound_engine = create_sound_engine()
+	mytheme = sh.set_theme(back_color, color)
+	sound_engine = sh.create_sound_engine()
 	volume_items = set_volume_items()
 	
 	options_sub = pm.Menu(h, w, 'Options', theme=mytheme)
@@ -386,8 +353,8 @@ def play_menu():
 	h = screen_res.current_h
 	w = screen_res.current_w
 
-	mytheme = set_theme()
-	sound_engine = create_sound_engine()
+	mytheme = sh.set_theme(back_color, color)
+	sound_engine = sh.create_sound_engine()
 
 	play_setting_sub = pm.Menu(h, w, 'Confirm Settings', theme=mytheme)
 
